@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head%}
+    <title>{% block title %} Timba - Administração de Filhos e Amigos da Guiné-Bissau na Bélgica {% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/timba_style.css') }}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/font_awesome_4.4.0.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    {% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<a class="navbar-brand"> <img class="logo" src="../static/img/logo_gnb_be.png" height="40"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbar1">
+    <ul class="navbar-nav ml-auto">
+       <li class="nav-item active"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard<span class="sr-only">(current)</span></a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{ url_for('associados') }}">Associados<span class="sr-only">(current)</span></a></li>
+       <li class="nav-item dropdown"><a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">Selecionar anuário</a>
+           {% if ano_corrente %}
+              <ul class="dropdown-menu">
+                 <li><a class="dropdown-item" href="{{url_for('display_ano', titulo=ano_corrente.titulo)}}"> {{ano_corrente.titulo}}</a></li>
+                  <input type="hidden" value="{{ano_corrente.titulo}}" name="titulo">
+              </ul>
+           {% endif %}
+       </li>
+       <li class="nav-item"><a class="btn ml-2 btn-warning" data-toggle="modal" data-target="#createAnualModal">Criar pasta anual</a></li>
+    </ul></div>
+</nav>
+<div class="modal fade" id="createAnualModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="{{url_for('create_annual_data')}}" method="post">
+            <div class="form-group">
+                <label for="titulo" class="col-form-label">Ano(Ex. 2019):</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Digite o título do ano">
+                <input type="hidden" value="{{titulo}}" name="titulo">
+            </div>
+            <div class="form-group">
+                <label for="cota" class="col-form-label">Valor de cota:</label>
+                <input type="text" class="form-control" id="cota" name="cota" placeholder="Digite o valor da cota">
+            </div>
+            <div class="form-group">
+             <button type="submit" class="btn btn-primary float-right">Salvar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+  <script src="../static/js/jquery-3.4.1.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/my_javascript.js"></script>
+</body>
+</html>

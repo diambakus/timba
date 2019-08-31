@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "navbar.html" %}
+{% block head %}{{ super() }}{% endblock%}
+<body>
+{% block content %}
+
+<nav class="navbar navbar-expand-md bg-light navbar-light">
+    <div class="navbar-collapse collapse pt-2 pt-md-0" id="navbar2">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Anuários terminados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  data-toggle="modal" data-target="#updateAnualModal" href="#">Editar anuário</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  data-toggle="modal" data-target="#enrollmentID" href="#">Associar membro(s)</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="modal fade" id="updateAnualModal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="{{url_for('update_ano')}}" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="retitulo" value="{{ano_corrente.titulo}}" readonly="readonly">
+                </div>
+                <div class="form-group">
+                    <label for="cota" class="col-form-label">Valor de cota:</label>
+                    <input type="text" class="form-control" id="cota" name="cota" value="{{ano_corrente.cota}}">
+                </div>
+                <div class="form-group">
+                    {% if ano_corrente is defined %}
+                    <label class="col-form-label">Status:</label>
+                    <p>
+                        {% if ano_corrente.corrente == True %}
+                            <input type="radio" name="corrente"  value="aberto" checked> Aberto </input><br>
+                            <input type="radio" name="corrente" value="fechado"> Fechado </input><br>
+                        {% else %}
+                            <input type="radio" name="corrente" value="aberto"> Aberto </input><br>
+                            <input type="radio" name="corrente"  value="fechado" checked> Fechado </input><br>
+                        {% endif %}
+                    </p>
+                </div>
+                    {%  endif %}
+                <div class="form-group">
+                 <button type="submit" class="btn btn-primary float-right">Salvar</button>
+                </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="enrollmentID">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times</button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form action="{{url_for('annual_enrollment')}}" method="post">
+                <div class="form-group">
+                    {% if membros_nao_inscritos is defined %}
+                <table id="membros_para_inserir" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Ocupação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for membro in membros_nao_inscritos %}
+                             <tr>
+                               <td>
+                                   <div class="checkbox">
+                                       <input type="checkbox" value="{{membro.id}}" name="check" id="{{loop.index}}">
+                                   </div>
+                               </td>
+                               <td>{{membro.nome}}</td>
+                               <td>{{membro.email}}</td>
+                               <td>{{membro.ocupacao}}</td>
+                             </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {%  endif %}
+                </div>
+
+                <div class="form-group">
+                     <input type="hidden" name="titulo" value="{{ano_corrente.titulo}}">
+                     <button type="submit" class="btn btn-primary float-right">Salvar</button>
+                </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+    <p></p>
+    <h5 align="center">Status dos membros inscritos</h5>
+    <p></p>
+    <table class="table table-striped table-dark table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Janeiro</th>
+            <th scope="col">Fevereiro</th>
+            <th scope="col">Março</th>
+            <th scope="col">Abril</th>
+            <th scope="col">Maio</th>
+            <th scope="col">Junho</th>
+            <th scope="col">Julho</th>
+            <th scope="col">Agosto</th>
+            <th scope="col">Setembro</th>
+            <th scope="col">Outubro</th>
+            <th scope="col">Novembro</th>
+            <th scope="col">Dezembro</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% if (membros_inscritos is defined) and membros_inscritos %}
+                {% for membro in membros_inscritos %}
+                    <tr>
+                        <td>{{membro.nome}}</td>
+                        <td>{{membro.email}}</td>
+                        <td>{{membro.jan}}</td>
+                        <td>{{membro.fev}}</td>
+                        <td>{{membro.mar}}</td>
+                        <td>{{membro.abr}}</td>
+                        <td>{{membro.mai}}</td>
+                        <td>{{membro.jun}}</td>
+                        <td>{{membro.jul}}</td>
+                        <td>{{membro.ago}}</td>
+                        <td>{{membro.sep}}</td>
+                        <td>{{membro.out}}</td>
+                        <td>{{membro.nov}}</td>
+                        <td>{{membro.dez}}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div> <!-- container -->
+{% endblock%}
+
+
+  <script src="../static/js/jquery-3.4.1.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/my_javascript.js"></script>
+</body>
+</html>

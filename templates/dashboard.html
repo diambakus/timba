@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends "navbar.html" %}
+{% block head %}{{ super() }}{% endblock%}
+<body>
+{% block content %}
+<div class="container">
+    {% if warning %}
+    <p></p>
+    <div class="alert alert-warning">
+        <h6 style="color:red; text-align:center;">{{ warning }}</h6>
+    </div>
+    {% endif %}
+</div> <!-- container -->
+{% endblock%}
+</body>
+</html>
