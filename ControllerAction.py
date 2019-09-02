@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.6
+
 from models import *
 
 engine = get_engine()

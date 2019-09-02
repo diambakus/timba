@@ -117,40 +117,166 @@
     <table class="table table-striped table-dark table-bordered">
         <thead>
         <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Email</th>
-            <th scope="col">Janeiro</th>
-            <th scope="col">Fevereiro</th>
-            <th scope="col">Março</th>
-            <th scope="col">Abril</th>
-            <th scope="col">Maio</th>
-            <th scope="col">Junho</th>
-            <th scope="col">Julho</th>
-            <th scope="col">Agosto</th>
-            <th scope="col">Setembro</th>
-            <th scope="col">Outubro</th>
-            <th scope="col">Novembro</th>
-            <th scope="col">Dezembro</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Mostra E-mail do associado">Nome</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Janeiro">Jan</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Fevereiro">Fev</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Março">Mar</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Abril">Abr</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Maio">Mai</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Junho">Jun</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Julho">Jul</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Agosto">Ago</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Setembro">Set</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Outubro">Out</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Novembro">Nov</th>
+            <th scope="col" data-toggle="tooltip" data-placement="top" title="Dezembro">Dez</th>
+            <th scope="col" class="check"></th>
         </tr>
         </thead>
         <tbody>
             {% if (membros_inscritos is defined) and membros_inscritos %}
                 {% for membro in membros_inscritos %}
                     <tr>
-                        <td>{{membro.nome}}</td>
-                        <td>{{membro.email}}</td>
-                        <td>{{membro.jan}}</td>
-                        <td>{{membro.fev}}</td>
-                        <td>{{membro.mar}}</td>
-                        <td>{{membro.abr}}</td>
-                        <td>{{membro.mai}}</td>
-                        <td>{{membro.jun}}</td>
-                        <td>{{membro.jul}}</td>
-                        <td>{{membro.ago}}</td>
-                        <td>{{membro.sep}}</td>
-                        <td>{{membro.out}}</td>
-                        <td>{{membro.nov}}</td>
-                        <td>{{membro.dez}}</td>
+                        <form class="form-row align-items-center" action="{{url_for('update_member_portfolio')}}" method="post">
+                                <td data-toggle="tooltip" data-placement="top" title="{{membro.email}}">{{membro.nome}}</td>
+                                <td>
+                                    {% if membro.jan == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if membro.fev == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.mar == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.abr == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.mai == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.jun == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.jul == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.ago == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.sep == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.out == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.nov == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                     {% if membro.dez == True %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" checked disabled>
+                                        </div>
+                                    {% else %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="checado">
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <th scope="col" data-toggle="tooltip" data-placement="top" title="Guadar alteração">
+                                        <button class="btn btn-sm btn-primary" type="submit" name="update">OK</button>
+                                        <input type="hidden"  name="email" value="{{membro.email}}">
+                                        <input type="hidden" name="titulo" value="{{ano_corrente.titulo}}">
+                                </th>
+                        </form>
                     </tr>
                 {% endfor %}
             {% endif %}

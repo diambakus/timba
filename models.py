@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.6
+
 from datetime import datetime
 from DBConn import *
 from sqlalchemy.orm import relationship, backref

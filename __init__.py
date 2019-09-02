@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, json, url_for, redirect
+#!/usr/bin/env python3.6
+
+from flask import Flask, render_template, request, url_for, redirect
 from ControllerAction import *
 
 
@@ -97,6 +99,14 @@ def annual_enrollment():
     titulo = request.form['titulo']
     ano = recuperar_ano(titulo)
     annual_enrolled_members[titulo] = make_enrollment(ano.id, checked_members)
+    return redirect(url_for('display_ano', titulo=titulo))
+
+
+@app.route('/update_member_portfolio', methods=['POST', 'GET'])
+def update_member_portfolio():
+    titulo = request.form['titulo']
+    email = request.form['email']
+
     return redirect(url_for('display_ano', titulo=titulo))
 
 
