@@ -1,4 +1,5 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerAction import *
@@ -12,6 +13,7 @@ membros = proverAssociados()
 sorted(todos_anos, key=lambda ano: ano.titulo)
 annual_enrolled_members = {}
 enrolled_members_status = {}
+
 
 @app.route('/')
 def main():
@@ -106,7 +108,9 @@ def annual_enrollment():
 def update_member_portfolio():
     titulo = request.form['titulo']
     email = request.form['email']
-
+    checked_months = request.form.getlist('check')
+    print(checked_months, email)
+    update_member_enrollment_status(email, titulo, checked_months)
     return redirect(url_for('display_ano', titulo=titulo))
 
 

@@ -1,11 +1,11 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from configparser import ConfigParser
 
 
-def read_database_config(filename='/home/diambakus/PycharmProjects/timba/config.ini', section='mysql'):
+def read_database_config(filename='config.ini', section='mysql'):
     parser = ConfigParser()
     parser.read(filename)
 
@@ -35,6 +35,4 @@ Base = declarative_base()
 
 def get_base():
     return Base
-
-
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)

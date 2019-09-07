@@ -46,3 +46,8 @@ example.on("click", "th.select-checkbox", function() {
         $("th.select-checkbox").addClass("selected");
     }
 });
+
+/*tooltip*/
+$(function() {
+    $('[data-toggle="tooltip"]').tooltip()
+});
