@@ -57,7 +57,6 @@ def update_ano():
         status_flag = False
     else:
         status_flag = True
-    print(request.form)
     if ano:
         if cota_aux and cota_aux != ano.cota:
             ano.cota = cota_aux
@@ -66,7 +65,10 @@ def update_ano():
             if outro_ano_corrente.titulo == ano.titulo:
                 ano.corrente = status_flag
         updateAnnualByTitulo(ano.titulo, ano.cota, ano.corrente)
-    return redirect(url_for('display_ano', titulo=ano.titulo))
+    if status_flag == True:
+        return redirect(url_for('display_ano', titulo=ano.titulo))
+    else:
+        return render_template('dashboard.html', success="A pasta correspondente ao ano %s foi fechada." %titulo)
 
 
 @app.route('/ano/<titulo>')

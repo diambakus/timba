@@ -5,10 +5,14 @@
 <body>
 {% block content %}
 <div class="container">
-    {% if warning %}
     <p></p>
+    {% if warning %}
     <div class="alert alert-warning">
         <h6 style="color:red; text-align:center;">{{ warning }}</h6>
+    </div>
+    {% elif success %}
+    <div class="alert alert-success">
+        <h6 style="color:blue; text-align:center;">{{ success }}</h6>
     </div>
     {% endif %}
 </div> <!-- container -->
