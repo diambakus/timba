@@ -63,8 +63,8 @@ def proverAssociados():
     return session.query(Person).all()
 
 
-def add_member(nome, endereco, ocupacao, email):
-    associado = Person(nome=nome, endereco=endereco, ocupacao=ocupacao, email=email)
+def add_member(nome, endereco, ocupacao, email, telefone):
+    associado = Person(nome=nome, endereco=endereco, ocupacao=ocupacao, email=email, telefone=telefone)
     session.add(associado)
     session.commit()
     return associado
@@ -135,56 +135,54 @@ def update_member_enrollment_status(email, titulo, months_status):
     year = recuperar_ano(titulo)
     member_enrollment_instance = session.query(AssociadoAnual).join(Annual).join(Person).\
         filter(and_(Annual.id == year.id, Person.id == member.id)).first()
-    print("HHHHHHHHHHHHHHHHHHHHHHH", member_enrollment_instance)
-    print("Month status", months_status)
+
     for month in months_status:
         month_integer = int(month)
         if month_integer == -1:
-            member_enrollment_instance.jan = True
-        elif month_integer == 1:
-            member_enrollment_instance.jan = False
+            member_enrollment_instance.jan = year.cota
+            year.montante += year.cota
         elif month_integer == -2:
-            member_enrollment_instance.fev = True
-        elif month_integer == 2:
-            member_enrollment_instance.fev = False
+            member_enrollment_instance.fev = year.cota
+            year.montante += year.cota
         elif month_integer == -3:
-            member_enrollment_instance.mar = True
-        elif month_integer == 3:
-            member_enrollment_instance.mar = False
+            member_enrollment_instance.mar = year.cota
+            year.montante += year.cota
         elif month_integer == -4:
-            member_enrollment_instance.abr = True
-        elif month_integer == 4:
-            member_enrollment_instance.abr = False
+            member_enrollment_instance.abr = year.cota
+            year.montante += year.cota
         elif month_integer == -5:
-            member_enrollment_instance.mai = True
-        elif month_integer == 5:
-            member_enrollment_instance.mai = False
+            member_enrollment_instance.mai = year.cota
+            year.montante += year.cota
         elif month_integer == -6:
-            member_enrollment_instance.jun = True
-        elif month_integer == 6:
-            member_enrollment_instance.jun = False
+            member_enrollment_instance.jun = year.cota
+            year.montante += year.cota
         elif month_integer == -7:
-            member_enrollment_instance.jul = True
-        elif month_integer == 7:
-            member_enrollment_instance.jul = False
+            member_enrollment_instance.jul = year.cota
+            year.montante += year.cota
         elif month_integer == -8:
-            member_enrollment_instance.ago = True
-        elif month_integer == 8:
-            member_enrollment_instance.ago = False
+            member_enrollment_instance.ago = year.cota
+            year.montante += year.cota
         elif month_integer == -9:
-            member_enrollment_instance.sep = True
-        elif month_integer == 9:
-            member_enrollment_instance.sep = False
+            member_enrollment_instance.sep = year.cota
+            year.montante += year.cota
         elif month_integer == -10:
-            member_enrollment_instance.oct = True
-        elif month_integer == 10:
-            member_enrollment_instance.oct = False
+            member_enrollment_instance.oct = year.cota
+            year.montante += year.cota
         elif month_integer == -11:
-            member_enrollment_instance.nov = True
-        elif month_integer == 11:
-            member_enrollment_instance.nov = False
+            member_enrollment_instance.nov = year.cota
+            year.montante += year.cota
         elif month_integer == -12:
-            member_enrollment_instance.dez = True
-        elif month_integer == 12:
-            member_enrollment_instance.dez = False
+            member_enrollment_instance.dez = year.cota
+            year.montante += year.cota
     session.commit()
+
+
+def get_total_collected(id_):
+    pass
+    membros = get_enrolled_member_via_assoc_table(id_)
+    total = 0.00
+    for membro in membros:
+        total += membro.jan + membro.fev + membro.mar + membro.abr + membro.mai + membro.jun + membro.jul\
+                 + membro.ago + membro.sep + membro.oct + membro.nov + membro.dez
+
+    return total

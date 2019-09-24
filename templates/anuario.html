@@ -9,13 +9,28 @@
     <div class="navbar-collapse collapse pt-2 pt-md-0" id="navbar2">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Anuários terminados</a>
+                <a class="nav-link" href="#">Anuário(s)</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"  data-toggle="modal" data-target="#updateAnualModal" href="#">Editar anuário</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link"  data-toggle="modal" data-target="#enrollmentID" href="#">Associar membro(s)</a>
+            </li>
+            <!--<li class="nav-item">
+                <a class="right" href="#">Dropdown menu</a>
+            </li>-->
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="navbar-brand" href="#"> <img class="logo" src="../static/img/excel.png" height="25"></a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                Total arrecadado: {{total_monetario}}
             </li>
         </ul>
     </div>
@@ -110,6 +125,15 @@
   </div>
 </div>
 
+<div class="modal fade" id="totalpago">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">Total arrecadado</div>
+        <div class="modal-body">{{total_monetario}}</div>
+    </div> <!-- modal content -->
+  </div> <!-- modal dialog -->
+</div> <!-- totalpago modal -->
+
 <div class="container-fluid">
     <p></p>
     <h5 align="center">Status dos membros inscritos</h5>
@@ -140,7 +164,7 @@
                         <form class="form-row align-items-center" action="{{url_for('update_member_portfolio')}}" method="post">
                                 <td data-toggle="tooltip" data-placement="top" title="{{membro.email}}">{{membro.nome}}</td>
                                 <td>
-                                    {% if membro.jan == True %}
+                                    {% if membro.jan != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{1}}" checked disabled>
                                         </div>
@@ -151,7 +175,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if membro.fev == True %}
+                                    {% if membro.fev != 0  %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{2}}" checked disabled>
                                         </div>
@@ -162,7 +186,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.mar == True %}
+                                     {% if membro.mar != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{3}}" checked disabled>
                                         </div>
@@ -173,7 +197,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.abr == True %}
+                                     {% if membro.abr != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{4}}" checked disabled>
                                         </div>
@@ -184,7 +208,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.mai == True %}
+                                     {% if membro.mai != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{5}}" checked disabled>
                                         </div>
@@ -195,7 +219,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.jun == True %}
+                                     {% if membro.jun != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{6}}" checked disabled>
                                         </div>
@@ -206,7 +230,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.jul == True %}
+                                     {% if membro.jul != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{7}}" checked disabled>
                                         </div>
@@ -217,7 +241,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.ago == True %}
+                                     {% if membro.ago != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{8}}" checked disabled>
                                         </div>
@@ -228,7 +252,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.sep == True %}
+                                     {% if membro.sep != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{9}}" checked disabled>
                                         </div>
@@ -239,7 +263,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.out == True %}
+                                     {% if membro.out != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{10}}" checked disabled>
                                         </div>
@@ -250,7 +274,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.nov == True %}
+                                     {% if membro.nov != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{11}}" checked disabled>
                                         </div>
@@ -261,7 +285,7 @@
                                     {% endif %}
                                 </td>
                                 <td>
-                                     {% if membro.dez == True %}
+                                     {% if membro.dez != 0 %}
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="check" value="{{12}}" checked disabled>
                                         </div>
@@ -289,5 +313,6 @@
   <script src="../static/js/jquery-3.4.1.js"></script>
   <script src="../static/js/bootstrap.min.js"></script>
   <script src="../static/js/my_javascript.js"></script>
+  <script src="../static/js/popper.min.js"></script>
 </body>
 </html>

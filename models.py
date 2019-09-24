@@ -11,6 +11,7 @@ class Person(Base):
     __tablename__ = "associados"
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     nome = sqlalchemy.Column(sqlalchemy.String(length=100))
+    telefone = sqlalchemy.Column(sqlalchemy.String(length=60))
     endereco = sqlalchemy.Column(sqlalchemy.String(length=200))
     ocupacao = sqlalchemy.Column(sqlalchemy.String(length=60))
     email = sqlalchemy.Column(sqlalchemy.String(length=100), unique=True)
@@ -19,8 +20,9 @@ class Person(Base):
     annuals = relationship("Annual", secondary="associadoanual", back_populates="associados")
 
     def __repr__(self):
-        return "<Associado(id={0}, name='{1}', address='{2}', occupation='{3}', email='{4}', ativo='{5}')>".format(
-            self.id, self.nome, self.endereco, self.ocupacao, self.email, self.ativo)
+        return "<Associado(id={0}, name='{1}', address='{2}', occupation='{3}', email='{4}', ativo='{5}', " \
+               "telefone='{6}')>".format(self.id, self.nome, self.endereco, self.ocupacao, self.email,
+                                         self.ativo, self.telefone)
 
 
 class Annual(Base):
@@ -28,12 +30,13 @@ class Annual(Base):
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     titulo = sqlalchemy.Column(sqlalchemy.Integer, unique=True)
     cota = sqlalchemy.Column(sqlalchemy.DECIMAL)
+    montante = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
     corrente = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
     associados = relationship("Person", secondary="associadoanual", back_populates="annuals")
 
     def __repr__(self):
-        return "<Anual(id={0}, titulo='{1}', cota='{2}', corrente='{3}')>".format(
-            self.id, self.titulo, self.cota, self.corrente)
+        return "<Anual(id={0}, titulo='{1}', cota='{2}', montante='{3}', corrente='{4}')>".format(
+            self.id, self.titulo, self.cota, self.montante, self.corrente)
 
 
 class AssociadoAnual(Base):
@@ -42,18 +45,18 @@ class AssociadoAnual(Base):
     anuarioId = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('anuario.id'), primary_key=True)
     associado = relationship(Person, backref=backref("ano_assoc"))
     ano = relationship(Annual, backref=backref("associado_assoc"))
-    jan = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    fev = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    mar = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    abr = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    mai = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    jun = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    jul = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    ago = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    sep = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    oct = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    nov = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
-    dez = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
+    jan = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    fev = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    mar = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    abr = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    mai = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    jun = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    jul = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    ago = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    sep = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    oct = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    nov = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    dez = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
 
     def __repr__(self):
         return "<AssociadoAnual(associadoId='{0}', anuarioId='{1}', jan='{2}', fev='{3}')>".format(
@@ -161,3 +164,16 @@ class Mapeador(object):
 
     def set_dez(self, dez):
         self.dez = dez
+
+
+class Nota(Base):
+    __tablename__ = 'nota'
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    valor_gasto = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
+    comentario = sqlalchemy.Column(sqlalchemy.String(length=250))
+    ano = sqlalchemy.Column(sqlalchemy.Integer)
+    data_do_gasto = sqlalchemy.Column(sqlalchemy.Date, default=datetime.now())
+
+    def __repr__(self):
+        return "<Nota(id='{0}', valor gasto ='{1}', ano do gasto ='{2}')>".format(
+            self.id, self.valor_gasto, self.ano)

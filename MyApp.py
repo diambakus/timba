@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerAction import *
+from babel.numbers import format_currency
 
 
 app = Flask(__name__, template_folder='templates/')
@@ -35,7 +35,8 @@ def user(name):
 def create_annual_data():
     ano_corrente = recuperar_ano_aberto()
     if ano_corrente:
-        return render_template('dashboard.html', ano_corrente=ano_corrente, warning="Atenção! Por favor, feche o anuário em aberto antes de abrir um novo.")
+        return render_template('dashboard.html', ano_corrente=ano_corrente, warning="Atenção! Por favor, "
+                            "feche o anuário em aberto antes de abrir um novo.")
     else:
         titulo = request.form['titulo']
         cota = request.form['cota']
@@ -76,8 +77,11 @@ def display_ano(titulo):
     ano_corrente = recuperar_ano_aberto()
     enrolled_members_status[ano_corrente.id] = construir_mapa(ano_corrente.id)
     membros_nao_inscritos = list_of_member_not_enrolled_yet(membros, enrolled_members_status[ano_corrente.id])
-    return render_template('anuario.html', membros=membros, ano_corrente=ano_corrente, membros_nao_inscritos=membros_nao_inscritos,
-                           membros_inscritos=enrolled_members_status[ano_corrente.id])
+    total_monetario = get_total_collected(ano_corrente.id)
+    return render_template('anuario.html', membros=membros, ano_corrente=ano_corrente,
+                           membros_nao_inscritos=membros_nao_inscritos, membros_inscritos=
+                           enrolled_members_status[ano_corrente.id],
+                           total_monetario=format_currency(ano_corrente.montante, 'EUR', locale='de_DE'))
 
 
 @app.route('/associados')
@@ -90,9 +94,10 @@ def associados():
 def create_member():
     nome = request.form['nome']
     endereco = request.form['endereco']
+    telefone = request.form['telefone']
     ocupacao = request.form['ocupacao']
     email = request.form['email']
-    membro = add_member(nome, endereco, ocupacao, email)
+    membro = add_member(nome, endereco, ocupacao, email, telefone)
     membros.append(membro)
     return redirect(url_for('associados'))
 
