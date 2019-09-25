@@ -177,12 +177,15 @@ def update_member_enrollment_status(email, titulo, months_status):
     session.commit()
 
 
-def get_total_collected(id_):
+def add_expense(valor_gasto, note, titulo, data_da_despesa):
     pass
-    membros = get_enrolled_member_via_assoc_table(id_)
-    total = 0.00
-    for membro in membros:
-        total += membro.jan + membro.fev + membro.mar + membro.abr + membro.mai + membro.jun + membro.jul\
-                 + membro.ago + membro.sep + membro.oct + membro.nov + membro.dez
+    expense = Nota(valor_gasto=valor_gasto, comentario=note, ano=titulo, data_do_gasto=data_da_despesa)
+    session.add(expense)
+    session.commit()
+    return expense
 
-    return total
+
+def get_expenses(titulo):
+    pass
+    expenses = session.query(Nota).filter(Nota.ano == titulo).all()
+    return expenses

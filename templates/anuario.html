@@ -17,14 +17,21 @@
             <li class="nav-item">
                 <a class="nav-link"  data-toggle="modal" data-target="#enrollmentID" href="#">Associar membro(s)</a>
             </li>
-            <!--<li class="nav-item">
-                <a class="right" href="#">Dropdown menu</a>
-            </li>-->
+            <li class="nav-item dropdown">
+                <a class="nav-link  dropdown-toggle" href="#" data-toggle="dropdown">Despesas</a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a class="nav-link"  data-toggle="modal" data-target="#registrar_despesa"
+                                                 href="#">Registrar</a></li>
+                    <li class="dropdown-item"><a class="nav-link" href="{{url_for('despesas_do_ano',
+                     titulo=ano_corrente.titulo)}}">Lista de despesas</a></li>
+                </ul>
+            </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="navbar-brand" href="#"> <img class="logo" src="../static/img/excel.png" height="25"></a>
+                <a class="navbar-brand" href="{{url_for('generate_excel', titulo=ano_corrente.titulo)}}">
+                    <img class="logo" src="../static/img/excel.png" height="25"></a>
             </li>
         </ul>
 
@@ -35,7 +42,7 @@
         </ul>
     </div>
 </nav>
-
+<!--Modals section-->
 <div class="modal fade" id="updateAnualModal">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
@@ -125,11 +132,32 @@
   </div>
 </div>
 
-<div class="modal fade" id="totalpago">
+<div class="modal fade" id="registrar_despesa">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
-        <div class="modal-header">Total arrecadado</div>
-        <div class="modal-body">{{total_monetario}}</div>
+        <div class="modal-header">
+            Registrar despesa
+            <button type="button" class="close" data-dismiss="modal">&times</button></div>
+        <div class="modal-body">
+            <form action="{{url_for('registrar_despesa', titulo=ano_corrente.titulo)}}" method="post">
+                <div class="form-group">
+                    <label for="valor_despesa" class="col-form-label">Valor</label>
+                    <input type="text" class="form-control" id="valor_despesa" name="valor_despesa">
+                </div>
+                <div class="form-group">
+                    <label for="data_despesa" class="col-form-label">Data da despesa</label>
+                    <input type="text" class="form-control" id="data_despesa" name="data_despesa"
+                    placeholder="dd/mm/aaaa">
+                </div>
+                <div class="form-group">
+                    <textarea type="text" class="form-control" id="nota_despesa" name="nota_despesa"
+                    rows="5" cols="30" placeholder="Escreva a justificação"></textarea>
+                </div>
+                <div class="form-group">
+                 <button type="submit" class="btn btn-primary float-right">Salvar</button>
+                </div>
+            </form>
+        </div>
     </div> <!-- modal content -->
   </div> <!-- modal dialog -->
 </div> <!-- totalpago modal -->

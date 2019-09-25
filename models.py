@@ -172,7 +172,8 @@ class Nota(Base):
     valor_gasto = sqlalchemy.Column(sqlalchemy.DECIMAL, default=0.0)
     comentario = sqlalchemy.Column(sqlalchemy.String(length=250))
     ano = sqlalchemy.Column(sqlalchemy.Integer)
-    data_do_gasto = sqlalchemy.Column(sqlalchemy.Date, default=datetime.now())
+    data_do_gasto = sqlalchemy.Column(sqlalchemy.Date)
+    data_do_registro = sqlalchemy.Column(sqlalchemy.Date, default=datetime.now())
 
     def __repr__(self):
         return "<Nota(id='{0}', valor gasto ='{1}', ano do gasto ='{2}')>".format(
