@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, url_for, redirect
 from ControllerAction import *
 from babel.numbers import format_currency
 from utils import *
+from SendEmail import *
 
 app = Flask(__name__, template_folder='templates/')
 app.static_folder = 'static'
@@ -148,6 +149,22 @@ def generate_excel(titulo):
     year = recuperar_ano(titulo)
     lista = construir_mapa(year.id)
     output_to_excel("Members_Status_"+str(titulo), lista, "Members Status")
+    return redirect(url_for('display_ano', titulo=titulo))
+
+
+@app.route('/send_email_reminder', methods=['POST'])
+def send_email_reminder():
+    pass
+    titulo = request.form['titulo']
+    email = request.form['email']
+    checked_months = request.form.getlist('check')
+    today = datetime.now().date()
+    for month in checked_months:
+        mes = int(month) * (-1)
+        data_contruida_str = titulo+'/'+str(mes)+'/05'
+        data_limite_pagamento = datetime.strptime(data_contruida_str, "%Y/%m/%d").date()
+        if today > data_limite_pagamento:
+            send_email(email, data_limite_pagamento)
     return redirect(url_for('display_ano', titulo=titulo))
 
 

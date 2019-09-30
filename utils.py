@@ -8,9 +8,6 @@ def output_to_excel(filename, content, sheet):
                          num_format_str='#,##0.00')
     row = 0
     column = 0
-    for item in content:
-
-    book.save()
 
 
 def teste_generate_excel():
