@@ -148,7 +148,8 @@ def generate_excel(titulo):
     pass
     year = recuperar_ano(titulo)
     lista = construir_mapa(year.id)
-    output_to_excel("Members_Status_"+str(titulo), lista, "Members Status")
+    filename = "Members_Status_"+str(titulo)+".xls"
+    output_to_excel(filename, lista, "Members Status")
     return redirect(url_for('display_ano', titulo=titulo))
 
 
