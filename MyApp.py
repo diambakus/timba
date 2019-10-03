@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import sys
+import os
 from flask import Flask, render_template, request, url_for, redirect
 from ControllerAction import *
 from babel.numbers import format_currency
 from utils import *
 from SendEmail import *
 
-app = Flask(__name__, template_folder='templates/')
-app.static_folder = 'static'
+base_dir = '.'
+if hasattr(sys, '_MEIPASS'):
+    base_dir = os.path.join(sys._MEIPASS)
+app = Flask(__name__,
+        static_folder = os.path.join(base_dir, 'static'),
+        template_folder = os.path.join(base_dir, 'templates'))
 
-todos_anos = annuals()
 membros = proverAssociados()
-sorted(todos_anos, key=lambda ano: ano.titulo)
 annual_enrolled_members = {}
 enrolled_members_status = {}
 
@@ -39,6 +43,7 @@ def create_annual_data():
         return render_template('dashboard.html', ano_corrente=ano_corrente, warning="Atenção! Por favor, "
                                                                                     "feche o anuário em aberto antes de abrir um novo.")
     else:
+        todos_anos = annuals()
         titulo = request.form['titulo']
         cota = request.form['cota']
         anoFlag = isAnoExistInDB(titulo, todos_anos)
@@ -167,6 +172,14 @@ def send_email_reminder():
         if today > data_limite_pagamento:
             send_email(email, data_limite_pagamento)
     return redirect(url_for('display_ano', titulo=titulo))
+
+
+@app.route('/anos')
+def anos():
+    pass
+    lista_de_anos = annuals()
+    ano_corrente = recuperar_ano_aberto()
+    return render_template('anos.html', anos=lista_de_anos, ano_corrente=ano_corrente)
 
 
 if __name__ == "__main__":

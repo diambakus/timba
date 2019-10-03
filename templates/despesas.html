@@ -24,7 +24,7 @@
             {% if (despesas is defined) and despesas %}
                 {% for d in despesas %}
                     <tr>
-                        <td>{{d.valor_gasto}}</td>
+                        <td>&euro; {{d.valor_gasto}}</td>
                         <td>{{d.comentario}}</td>
                         <td>{{d.data_do_gasto}}</td>
                         <td>{{d.data_do_registro}}</td>
@@ -35,6 +35,5 @@
     </table>
 </div>
 {% endblock %}
-</div>
 </body>
 </html>
