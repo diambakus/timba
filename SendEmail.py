@@ -27,12 +27,18 @@ def send_email(email, data_limite_pagamento):
     gmailaddress = config_db['endereco']
     gmailpassword = config_db['senha']
     mailto = email
-    content = 'Prezado(a) assoaciado(a)!\n\n Escrevemos para informar que a sua cota, referente a %s, estah em ' \
+    content = 'Prezado(a) assoaciado(a)!\n\n Escrevemos para informar que a sua cota, referente a %s, esta em ' \
               'atraso. ' \
-              'Por favor, pague a cota em atraso.\n\n  Cumprimentos, \n Gerencia' % data_limite_pagamento
+              'Por favor, entre em contacto e pague a cota.\n\n  Cumprimentos, \n Gerencia\n\n Por, favor, nao responda este e-mail. Utilize faguibb@outlook.com para contacto.' % data_limite_pagamento
     message = 'Subject: {}\n\n{}'.format(SUBJECT, content)
-    mailServer = smtplib.SMTP(config_db['servidor'], config_db['porta'])
+    try:
+        mailServer = smtplib.SMTP(config_db['servidor'], config_db['porta'])
+    except Exception as e:
+        print(e)
+        mailServer = smtplib.SMTP_SSL(config_db['servidor'], 465)
+    mailServer.ehlo()
     mailServer.starttls()
+    mailServer.ehlo()
     mailServer.login(gmailaddress, gmailpassword)
     mailServer.sendmail(gmailaddress, mailto, message)
     mailServer.quit()

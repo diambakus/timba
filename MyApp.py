@@ -7,6 +7,7 @@ from ControllerAction import *
 from babel.numbers import format_currency
 from utils import *
 from SendEmail import *
+from pyfladesk import init_gui
 
 base_dir = '.'
 if hasattr(sys, '_MEIPASS'):
@@ -122,7 +123,6 @@ def update_member_portfolio():
     titulo = request.form['titulo']
     email = request.form['email']
     checked_months = request.form.getlist('check')
-    print(checked_months, email)
     update_member_enrollment_status(email, titulo, checked_months)
     return redirect(url_for('display_ano', titulo=titulo))
 
@@ -183,4 +183,5 @@ def anos():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    #app.run(debug=True)
+    init_gui(app)
